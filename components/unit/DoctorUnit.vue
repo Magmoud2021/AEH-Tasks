@@ -21,7 +21,11 @@
 
     <div class="hold-buttons">
       <nuxt-link
-      :to="localePath('/')"
+       :to="
+          this.$i18n.locale === 'en'
+            ? localePath(`/doctor/${doctor.slug}`)
+            : localePath(`/${encodeURI('doctor')}/${doctor.slug}`)
+        "
         class="btn-main"
       >
         <span></span>{{ $t("details") }}

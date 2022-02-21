@@ -53,35 +53,30 @@
         </li>
 
         <li class="nav-item nav-item--menu">
-          <NuxtLink
-           :to="localePath('/')"
-            class="nav-link"
-          >
+          <NuxtLink :to="localePath('/')" class="nav-link">
             {{ $t("menu.clinics") }}
           </NuxtLink>
         </li>
 
         <li class="nav-item nav-item--menu">
-          <NuxtLink
-            :to="localePath('/')"
-            class="nav-link"
-          >
+          <NuxtLink :to="localePath('/')" class="nav-link">
             {{ $t("menu.services") }}
           </NuxtLink>
         </li>
 
         <li class="nav-item nav-item--menu">
-          <NuxtLink
-           :to="localePath('/')"
-            class="nav-link"
-          >
+          <NuxtLink :to="localePath('/')" class="nav-link">
             {{ $t("menu.offers") }}
           </NuxtLink>
         </li>
 
         <li class="nav-item nav-item--menu">
           <NuxtLink
-            :to="localePath('/')"
+            :to="
+              $i18n.locale === 'en'
+                ? localePath('/doctors')
+                : localePath(encodeURI('/doctors'))
+            "
             class="nav-link"
           >
             {{ $t("menu.doctors") }}
@@ -91,7 +86,7 @@
         <li class="nav-item nav-item--menu">
           <NuxtLink
             v-if="$i18n.locale === 'ar'"
-           :to="localePath('/')"
+            :to="localePath('/')"
             class="nav-link"
           >
             {{ $t("menu.blog") }}
@@ -100,9 +95,7 @@
 
         <li class="nav-item nav-item--menu">
           <NuxtLink
-            :to="
-              $i18n.locale === 'en' ? '/en/' : encodeURI('/')
-            "
+            :to="$i18n.locale === 'en' ? '/en/' : encodeURI('/')"
             class="nav-link"
           >
             {{ $t("menu.contact") }}
