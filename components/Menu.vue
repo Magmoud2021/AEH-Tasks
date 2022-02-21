@@ -45,7 +45,7 @@
       <ul class="navbar-nav ml-auto navbar__nav">
         <li class="nav-item nav-item--menu">
           <NuxtLink
-           :to="localePath('/')"
+            :to="$i18n.locale === 'en' ? '/en/about_us' : encodeURI('/من-نحن')"
             class="nav-link"
           >
             {{ $t("menu.about") }}
