@@ -21,21 +21,21 @@
 </template>
 
 <script>
-import Testimonial from '@/components/unit/Testimonial'
-import SectionIntro from '~/components/unit/SectionHeadline'
-import { fetchStore } from '~/mixin/fetchStore'
-// import { splideOptions } from '~/utilities/splideOptions'
-import { splideUpdate } from '~/mixin/splideUpdate'
+import Testimonial from "@/components/unit/Testimonial";
+import SectionIntro from "~/components/unit/SectionHeadline";
+import { fetchStore } from "~/mixin/fetchStore";
+
+import { splideUpdate } from "~/mixin/splideUpdate";
 export default {
-  name: 'Testimonials',
+  name: "Testimonials",
   components: { SectionIntro, Testimonial },
   mixins: [
     fetchStore([
       {
-        stateName: 'testimonials',
+        stateName: "testimonials",
       },
     ]),
-    splideUpdate('testimonials', 'testimonialsSliders'),
+    splideUpdate("testimonials", "testimonialsSliders"),
   ],
   data() {
     return {
@@ -44,25 +44,25 @@ export default {
         // ...splideOptions(this),
         rewind: true,
         perPage: 1,
-        direction: this.$i18n.locale === 'en' ? 'ltr' : 'rtl',
+        direction: this.$i18n.locale === "en" ? "ltr" : "rtl",
         arrows: false,
         classes: {
-          pagination: 'splide__pagination testimonials__pagination',
+          pagination: "splide__pagination testimonials__pagination",
         },
       },
-    }
+    };
   },
   mounted() {
     this.$axios
       .$get(`/api/sub_titles?lang=${this.$i18n.locale}`)
-      .then((res) => (this.subTitlesData = res.data))
+      .then((res) => (this.subTitlesData = res.data));
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .testimonials {
-  background-image: url('~assets/images/testimonials/img_testmonials_bg.png');
+  background-image: url("~assets/images/testimonials/img_testmonials_bg.png");
   background-size: cover;
   padding-bottom: 7rem;
 }

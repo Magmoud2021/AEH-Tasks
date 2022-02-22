@@ -47,7 +47,7 @@
           </div>
 
           <div class="about-edu-doctor-detail">
-            <!-- eslint-disable vue/no-v-html -->
+
             <div v-html="doctor.description"></div>
           </div>
         </div>
@@ -59,97 +59,97 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import TopPhoto from '~/components/unit/TopPhoto'
-import BreadCrumb from '~/components/unit/BreadCrumb'
+import { mapState, mapGetters } from "vuex";
+import TopPhoto from "~/components/unit/TopPhoto";
+import BreadCrumb from "~/components/unit/BreadCrumb";
 export default {
-  name: 'DoctorPage',
-  components: {  TopPhoto,BreadCrumb  },
+  name: "DoctorPage",
+  components: { TopPhoto, BreadCrumb },
   nuxtI18n: {
     paths: {
-      ar: `/${encodeURI('doctor')}/:slug`,
+      ar: `/${encodeURI("doctor")}/:slug`,
       en: `/doctor/:slug`,
     },
   },
   filters: {
     cutParagraph(value) {
-      if (!value) return
+      if (!value) return;
       if (value.length > 600) {
-        return value.slice(0, 425) + '...'
+        return value.slice(0, 425) + "...";
       } else {
-        return value
+        return value;
       }
     },
   },
-  layout: 'contactUsLayout',
+  layout: "contactUsLayout",
   /* eslint-disable */
   validate({ app, params, store }) {
-    store.dispatch('doctor/reset_en_doctor')
-    store.dispatch('doctor/reset_ar_doctor')
+    store.dispatch("doctor/reset_en_doctor");
+    store.dispatch("doctor/reset_ar_doctor");
 
     const thePromise = new Promise(async (resolve, reject) => {
-      if (app.i18n.locale === 'en') {
+      if (app.i18n.locale === "en") {
         if (!store.state.doctor.en_loaded) {
-          await store.dispatch('doctor/load_en_doctor', params.slug)
+          await store.dispatch("doctor/load_en_doctor", params.slug);
         }
 
-        resolve(store.state.doctor.en_doctor)
+        resolve(store.state.doctor.en_doctor);
       } else {
         if (!store.state.doctor.ar_loaded) {
-          await store.dispatch('doctor/load_ar_doctor', params.slug)
+          await store.dispatch("doctor/load_ar_doctor", params.slug);
         }
 
-        resolve(store.state.doctor.ar_doctor)
+        resolve(store.state.doctor.ar_doctor);
       }
-    })
+    });
 
     return thePromise.then((data) => {
-      return data.slug === params.slug
-    })
+      return data.slug === params.slug;
+    });
   },
   async fetch() {
     if (!this.$store.state.doctor.en_loaded) {
       await this.$store.dispatch(
-        'doctor/load_en_doctor',
+        "doctor/load_en_doctor",
         this.$route.params.slug
-      )
+      );
     }
 
     if (!this.$store.state.doctor.ar_loaded) {
       await this.$store.dispatch(
-        'doctor/load_ar_doctor',
+        "doctor/load_ar_doctor",
         this.$route.params.slug
-      )
+      );
     }
 
-    await this.$store.dispatch('i18n/setRouteParams', {
+    await this.$store.dispatch("i18n/setRouteParams", {
       ar: { slug: this.ar_doctor.slug },
       en: { slug: this.en_doctor.slug },
-    })
+    });
   },
   head() {
     return {
       meta: [
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: this.doctor.meta_description,
         },
       ],
-    }
+    };
   },
   computed: {
-    ...mapGetters(['Setting']),
-    ...mapState('doctor', ['en_doctor', 'ar_doctor']),
+    ...mapGetters(["Setting"]),
+    ...mapState("doctor", ["en_doctor", "ar_doctor"]),
     doctor() {
-      return this.$i18n.locale === 'en' ? this.en_doctor : this.ar_doctor
+      return this.$i18n.locale === "en" ? this.en_doctor : this.ar_doctor;
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">
-@import '~assets/scss/var.scss';
+@import "~assets/scss/var.scss";
 
 .single-doctor-detail {
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
@@ -267,7 +267,7 @@ export default {
 }
 
 .about-edu-doctor-detail {
-  background: url('~assets/images/bg/bg-aboutus-shape.png') no-repeat center;
+  background: url("~assets/images/bg/bg-aboutus-shape.png") no-repeat center;
   background-size: contain;
 }
 

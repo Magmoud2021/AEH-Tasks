@@ -177,12 +177,12 @@
 import { mapGetters } from "vuex";
 import Menu from "@/components/Menu";
 import SearchForm from "@/components/SearchForm";
-// import { fetchStore } from '~/mixin/fetchStore'
+
 
 export default {
   name: "Header",
   components: { Menu, SearchForm },
-  // mixins: [fetchStore({ stateName: 'allSettings' })],
+
   data() {
     return {
       windowWidth: null,

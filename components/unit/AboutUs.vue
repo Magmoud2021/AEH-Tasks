@@ -39,7 +39,7 @@
 
         <div class="col-lg-6 col-12">
           <div class="about-us-content">
-            <h1 class="about-us-header">{{ $t('about_us') }}</h1>
+            <h1 class="about-us-header">{{ $t("about_us") }}</h1>
 
             <p
               v-if="String($route.name).match(/about/i) === null"
@@ -60,7 +60,7 @@
                   : localePath(`/${encodeURI('من-نحن')}`)
               "
               class="btn-main"
-              >{{ $t('readMore') }}</nuxt-link
+              >{{ $t("readMore") }}</nuxt-link
             >
           </div>
         </div>
@@ -70,52 +70,41 @@
 </template>
 
 <script>
-import { fetchStore } from '~/mixin/fetchStore'
+import { fetchStore } from "~/mixin/fetchStore";
 
 export default {
-  name: 'AboutUs',
+  name: "AboutUs",
   filters: {
     cutParagraph(value) {
-      if (!value) return
+      if (!value) return;
       if (value.length > 600) {
-        return value.slice(0, 425) + '...'
+        return value.slice(0, 425) + "...";
       } else {
-        return value
+        return value;
       }
     },
   },
   mixins: [
     fetchStore([
       {
-        stateName: 'subTitles',
+        stateName: "subTitles",
       },
       {
-        stateName: 'aboutUs',
+        stateName: "aboutUs",
       },
     ]),
   ],
   data() {
     return {
       showFrame: false,
-    }
+    };
   },
   methods: {
     showFrameFunc() {
-      this.showFrame = true
+      this.showFrame = true;
     },
   },
-  // mounted() {
-  // this.$nextTick(function () {
-  //   window.addEventListener('load', () => {
-  //     this.showFrame = true
-  //   })
-
-  //   if (!this.showFrame) {
-  //     this.showFrame = true
-  //   }
-  // })
-  // },
-}
+};
 </script>
 
 <style scoped lang="scss">

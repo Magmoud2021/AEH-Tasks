@@ -4,9 +4,8 @@
       <div class="row position-relative">
         <div class="col-lg-7">
           <h2 class="about__title text-capitalize">
-            <b>{{ $t('about') }}</b> {{ $t('andalusiaEgypt') }}
+            <b>{{ $t("about") }}</b> {{ $t("andalusiaEgypt") }}
           </h2>
-          <!-- <h2 class="about__sub-title text-uppercase">{{$t('PROFESSIONALCARE')}}</h2> -->
           <p
             class="about__desc p-0 mt-4"
             :class="activeId == 0 ? 'd-block' : 'd-none'"
@@ -67,7 +66,7 @@
                     type="button"
                     class="btn about__clinics__box__button text-white"
                   >
-                    {{ $t('readMore') }}
+                    {{ $t("readMore") }}
                   </button>
                 </nuxt-link>
               </div>
@@ -81,58 +80,54 @@
 </template>
 
 <script>
-import { fetchStore } from '~/mixin/fetchStore'
+import { fetchStore } from "~/mixin/fetchStore";
 
 export default {
-  name: 'AboutUsHome',
+  name: "AboutUsHome",
   data() {
     return {
       showFrame: false,
       clinics: [],
       show: true,
       activeId: 0,
-      animateValue: '',
-      clinicsFilters: '',
-      aboutUs: '',
+      animateValue: "",
+      clinicsFilters: "",
+      aboutUs: "",
       aboutUsData: {},
-    }
+    };
   },
   async fetch() {
     this.clinics = await this.$axios.$get(
       `/api/clinics?lang=${this.$i18n.locale}`
-    )
-    this.clinicsFilters = this.clinics.data.slice(0, 3)
+    );
+    this.clinicsFilters = this.clinics.data.slice(0, 3);
     this.aboutUs = await this.$axios.$get(
       `/api/about_us?lang=${this.$i18n.locale}`
-    )
-    this.aboutUsData = this.aboutUs.data
+    );
+    this.aboutUsData = this.aboutUs.data;
   },
   mixins: [
     fetchStore([
       {
-        stateName: 'subTitles',
+        stateName: "subTitles",
       },
     ]),
   ],
   methods: {
     showFrameFunc() {
-      this.showFrame = true
+      this.showFrame = true;
     },
     showHide(id) {
-      this.activeId = id
+      this.activeId = id;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/scss/var';
+@import "~assets/scss/var";
 
 $small: 991px;
-
-// .animate-style{
-//   animation: fadein 0.1s linear;
-// }
 
 @keyframes fadein {
   from {

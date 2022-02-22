@@ -15,13 +15,6 @@
           <option selected disabled>
             {{ $t('bookNowForm.SelectHospital') }}
           </option>
-          <!-- <option
-            v-for="hospital in hospitalsFilter"
-            :key="hospital.HospitalID"
-            :value="hospital.HospitalID"
-          >
-            {{ hospital.HospitalName }}
-          </option> -->
         </select>
       </div>
       <div class="col-12 col-lg-4 pr-1 pl-1">

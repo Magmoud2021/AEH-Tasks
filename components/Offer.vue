@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-center my-4">
           <div class="offer__heading">
-            {{ $t('offersHeading') }}
+            {{ $t("offersHeading") }}
           </div>
         </div>
         <div class="col-lg-4 col-12">
@@ -29,19 +29,20 @@
                 <span
                   class="offer__buttons--book offer__buttons--shared d-none"
                   @click="showModal(bannerOfferFinal)"
-                  >{{ $t('getoffer') }}</span
+                  >{{ $t("getoffer") }}</span
                 >
                 <nuxt-link
-                            to="/"
-
-                  class="offer__buttons--shared offer__buttons--view-more btn-main"
-                  >{{ $t('details') }}
+                  to="/"
+                  class="
+                    offer__buttons--shared offer__buttons--view-more
+                    btn-main
+                  "
+                  >{{ $t("details") }}
                 </nuxt-link>
                 <nuxt-link
-                           to="/"
-
+                  to="/"
                   class="offer__buttons--shared offer__buttons--view-more"
-                  >{{ $t('viewmore') }}
+                  >{{ $t("viewmore") }}
                 </nuxt-link>
               </div>
             </div>
@@ -53,35 +54,27 @@
 </template>
 
 <script>
-import { fetchStore } from '~/mixin/fetchStore'
+import { fetchStore } from "~/mixin/fetchStore";
 export default {
-  name: 'Offer',
+  name: "Offer",
   mixins: [
     fetchStore([
       {
-        stateName: 'bannerOffer',
+        stateName: "bannerOffer",
       },
     ]),
   ],
   computed: {
     bannerOfferFinal() {
-      return this.bannerOffer.length > 0 ? this.bannerOffer[0] : {}
+      return this.bannerOffer.length > 0 ? this.bannerOffer[0] : {};
     },
   },
-  methods: {
-    // showModal(offer) {
-    //   const offerModal = document.getElementById('exampleModalLong')
-    //   // let offerInput = document.getElementById('offer-input')
-    //   localStorage.setItem('offer', offer.title)
-    //   offerModal.classList.add('show')
-    // },
-  },
-}
+};
 </script>
 
 <style scoped lang="scss">
 .offer {
-  background: url('~/assets/images/bg/img_consultation_banner.png') no-repeat
+  background: url("~/assets/images/bg/img_consultation_banner.png") no-repeat
     center bottom;
   background-size: cover;
   padding-bottom: 5rem;
