@@ -1,12 +1,14 @@
 <template>
   <div class="hold-doctors">
-
     <TopPhoto :bg-img="Setting.doctors_header_image" />
 
+    <BreadCrumb
+      current-page-link="Doctors"
+      :current-page-translate="$t('menu.doctors')"
+    />
 
     <div class="container">
-      <h1 class="dash-heading">{{ $t('menu.doctors') }}</h1>
-
+      <h1 class="dash-heading">{{ $t("menu.doctors") }}</h1>
 
       <div v-if="allDoctors.length" class="row">
         <div
@@ -19,7 +21,7 @@
       </div>
 
       <div v-else class="row">
-        <h4 class="text-center">{{ $t('no_found') }}</h4>
+        <h4 class="text-center">{{ $t("no_found") }}</h4>
       </div>
 
       <v-pagination
@@ -30,111 +32,86 @@
         :classes="bootstrapPaginationClasses"
         @change="onChangePaging"
       ></v-pagination>
-
-
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import vPagination from 'vue-plain-pagination'
+import { mapState, mapGetters } from "vuex";
+import vPagination from "vue-plain-pagination";
 // import { updateSeo } from '~/mixin/updateSeo'
 
 export default {
-  name: 'DoctorsPage',
+  name: "DoctorsPage",
   components: {
     vPagination,
   },
   nuxtI18n: {
     paths: {
-      ar: `/${encodeURI('doctors')}`,
+      ar: `/${encodeURI("doctors")}`,
       en: `/doctors`,
     },
   },
   async asyncData({ app, $axios }) {
     const allDoctors = await $axios.get(
       `api/all_doctors?lang=${app.i18n.locale}&page=1&limit=9`
-    )
-    const clinics = await $axios.get(`/api/clinics?lang=${app.i18n.locale}`)
+    );
+    const clinics = await $axios.get(`/api/clinics?lang=${app.i18n.locale}`);
     const specialities = await $axios.get(
       `/api/specialities?lang=${app.i18n.locale}`
-    )
+    );
 
     return {
       allDoctors: allDoctors.data.data,
       totalItemsLength: allDoctors.data.count,
       clinics: clinics.data.data,
       specialities: specialities.data.data,
-    }
+    };
   },
   data() {
     return {
       rotated: false,
       all: true,
       currentPage: 1,
-      branch_id: '',
-      clinic_id: '',
-      speciality_id: '',
+      branch_id: "",
+      clinic_id: "",
+      speciality_id: "",
       clinics: [],
       specialities: [],
       bootstrapPaginationClasses: {
-        ul: 'pagination',
-        li: 'page-item',
-        liActive: 'active',
-        liDisable: 'disabled',
-        button: 'page-link',
+        ul: "pagination",
+        li: "page-item",
+        liActive: "active",
+        liDisable: "disabled",
+        button: "page-link",
       },
-    }
+    };
   },
-  // mixins: [updateSeo('seoObj')],
-  // async fetch() {
-  //   if (!this.$store.state.contactUs.en_loaded) {
-  //     await this.$store.dispatch('contactUs/load_en_contactUs')
-  //   }
 
-  //   if (!this.$store.state.contactUs.ar_loaded) {
-  //     await this.$store.dispatch('contactUs/load_ar_contactUs')
-  //   }
 
-  //   this.rotated = false
-  // },
-  // head() {
-  //   return {
-  //     meta: [
-  //       {
-  //         hid: 'description',
-  //         name: 'description',
-  //         // content: this.contactUs.doctor_seo
-  //         //   ? this.contactUs.doctor_seo.description
-  //         //   : {},
-  //       },
-  //     ],
-  //   }
-  // },
   computed: {
-    ...mapGetters(['Setting']),
-    ...mapState('contactUs', ['en_contactUs', 'ar_contactUs']),
-    ...mapState('branches', ['en_branches', 'ar_branches']),
+    ...mapGetters(["Setting"]),
+    ...mapState("contactUs", ["en_contactUs", "ar_contactUs"]),
+    ...mapState("branches", ["en_branches", "ar_branches"]),
     contactUs() {
-      return this.$i18n.locale === 'en' ? this.en_contactUs : this.ar_contactUs
+      return this.$i18n.locale === "en" ? this.en_contactUs : this.ar_contactUs;
     },
     branches() {
-      return this.$i18n.locale === 'en' ? this.en_branches : this.ar_branches
+      return this.$i18n.locale === "en" ? this.en_branches : this.ar_branches;
     },
     seoObj() {
-      return this.contactUs?.doctor_seo
+      return this.contactUs?.doctor_seo;
     },
   },
   mounted() {
     if (!this.$store.state.branches.en_loaded) {
-      this.$store.dispatch('branches/load_en_loaded')
-      this.$store.dispatch('branches/load_en_branches')
+      this.$store.dispatch("branches/load_en_loaded");
+      this.$store.dispatch("branches/load_en_branches");
     }
 
     if (!this.$store.state.branches.ar_loaded) {
-      this.$store.dispatch('branches/load_ar_loaded')
-      this.$store.dispatch('branches/load_ar_branches')
+      this.$store.dispatch("branches/load_ar_loaded");
+      this.$store.dispatch("branches/load_ar_branches");
     }
   },
   methods: {
@@ -144,12 +121,12 @@ export default {
           `/api/all_doctors?branch_id=${this.branch_id}&clinic_id=${this.clinic_id}&speciality_id=${this.speciality_id}&lang=${this.$i18n.locale}&page=${page}&limit=9`
         )
         .then((res) => {
-          this.allDoctors = res.data.data
+          this.allDoctors = res.data.data;
         })
-        .catch((error) => console.log(error.data))
+        .catch((error) => console.log(error.data));
     },
     onChangePaging() {
-      this.getDoctorsInit(this.currentPage)
+      this.getDoctorsInit(this.currentPage);
     },
     filter() {
       this.$axios
@@ -157,78 +134,78 @@ export default {
           `/api/all_doctors?branch_id=${this.branch_id}&clinic_id=${this.clinic_id}&speciality_id=${this.speciality_id}&page=1&lang=${this.$i18n.locale}`
         )
         .then((res) => {
-          this.allDoctors = res.data.data
-          this.totalItemsLength = res.data.count
-        })
+          this.allDoctors = res.data.data;
+          this.totalItemsLength = res.data.count;
+        });
     },
     async filterChange() {
       try {
         if (!this.branch_id) {
-          this.branch_id = ''
+          this.branch_id = "";
         }
 
-        this.resetInputs()
+        this.resetInputs();
 
-        await this.fetchClinics()
-        await this.fetchSpecialities()
+        await this.fetchClinics();
+        await this.fetchSpecialities();
 
-        this.filter()
+        this.filter();
       } catch (error) {}
     },
     async clinicChange() {
       try {
-        this.resetSpecialitiesInputs()
+        this.resetSpecialitiesInputs();
 
         const specialities = await this.$axios.$get(
           `/api/specialities?lang=${this.$i18n.locale}&branch_id=${this.branch_id}&clinic_id=${this.clinic_id}`
-        )
+        );
 
-        const specialitiesData = await specialities?.data
+        const specialitiesData = await specialities?.data;
 
-        this.specialities = specialitiesData
+        this.specialities = specialitiesData;
 
-        this.filter()
+        this.filter();
       } catch (error) {}
     },
     specialitiesChange() {
       try {
-        this.filter()
+        this.filter();
       } catch (error) {}
     },
     resetInputs() {
-      this.clinic_id = ''
-      this.speciality_id = ''
-      this.clinics = []
-      this.specialities = []
+      this.clinic_id = "";
+      this.speciality_id = "";
+      this.clinics = [];
+      this.specialities = [];
     },
     resetSpecialitiesInputs() {
-      this.speciality_id = ''
-      this.specialities = []
+      this.speciality_id = "";
+      this.specialities = [];
     },
     async fetchClinics() {
       const clinics = await this.$axios.$get(
         `/api/clinics?lang=${this.$i18n.locale}&branch_id=${this.branch_id}`
-      )
+      );
 
-      const clinicsData = await clinics?.data
+      const clinicsData = await clinics?.data;
 
-      this.clinics = clinicsData
+      this.clinics = clinicsData;
     },
     async fetchSpecialities() {
       const specialities = await this.$axios.$get(
         `/api/specialities?lang=${this.$i18n.locale}&branch_id=${this.branch_id}&clinic_id=${this.clinic_id}`
-      )
+      );
 
-      const specialitiesData = await specialities?.data
+      const specialitiesData = await specialities?.data;
 
-      this.specialities = specialitiesData
+      this.specialities = specialitiesData;
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">
-@import '~assets/scss/var.scss';
+@import "~assets/scss/var.scss";
 .booking {
   margin-top: -3rem;
   position: relative;
